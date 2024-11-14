@@ -12,3 +12,6 @@ dependencies:
       load: BEFORE
       required: true
       join-classpath: true
+    FancyNpcs:
+      load: BEFORE
+      required: false

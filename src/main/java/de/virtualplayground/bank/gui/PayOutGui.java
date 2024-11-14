@@ -14,12 +14,12 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 
 import javax.annotation.Nonnull;
 
-public class DepositGui extends Gui {
+public class PayOutGui extends Gui {
 
     private final BankMainGui bankMainGui;
 
-    public DepositGui(@Nonnull BankMainGui bankMainGui) {
-        super(Component.text("Bank > Einzahlen"), 5);
+    public PayOutGui(@Nonnull BankMainGui bankMainGui) {
+        super(Component.text("Bank > Auszahlen"), 5);
         this.bankMainGui = bankMainGui;
     }
 
@@ -44,9 +44,9 @@ public class DepositGui extends Gui {
         setItem(19, new GuiIcon(new ItemBuilder(Material.IRON_BLOCK)
                 .setName(Lang.parse("<yellow>1"))
         ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_1").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_1").build());
-                virtualPlayer.addCoins(1);
+            if (virtualPlayer.getCoins() >= 1) {
+                player.getInventory().addItem(itemManager.getItem("coins_1").build());
+                virtualPlayer.removeCoins(1);
                 updateBalance(virtualPlayer);
             }
         }));
@@ -54,9 +54,9 @@ public class DepositGui extends Gui {
         setItem(21, new GuiIcon(new ItemBuilder(Material.GOLD_BLOCK)
                 .setName(Lang.parse("<yellow>10"))
         ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_10").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_10").build());
-                virtualPlayer.addCoins(10);
+            if (virtualPlayer.getCoins() >= 10) {
+                player.getInventory().addItem(itemManager.getItem("coins_10").build());
+                virtualPlayer.removeCoins(10);
                 updateBalance(virtualPlayer);
             }
         }));
@@ -64,9 +64,9 @@ public class DepositGui extends Gui {
         setItem(23, new GuiIcon(new ItemBuilder(Material.EMERALD_BLOCK)
                 .setName(Lang.parse("<yellow>50"))
         ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_50").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_50").build());
-                virtualPlayer.addCoins(50);
+            if (virtualPlayer.getCoins() >= 50) {
+                player.getInventory().addItem(itemManager.getItem("coins_50").build());
+                virtualPlayer.removeCoins(50);
                 updateBalance(virtualPlayer);
             }
         }));
@@ -74,9 +74,9 @@ public class DepositGui extends Gui {
         setItem(25, new GuiIcon(new ItemBuilder(Material.DIAMOND_BLOCK)
                 .setName(Lang.parse("<yellow>100"))
         ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_100").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_100").build());
-                virtualPlayer.addCoins(100);
+            if (virtualPlayer.getCoins() >= 100) {
+                player.getInventory().addItem(itemManager.getItem("coins_100").build());
+                virtualPlayer.removeCoins(100);
                 updateBalance(virtualPlayer);
             }
         }));

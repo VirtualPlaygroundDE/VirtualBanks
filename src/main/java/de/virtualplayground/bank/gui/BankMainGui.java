@@ -8,12 +8,12 @@ import de.virtualplayground.lib.lang.Lang;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 
 public class BankMainGui extends Gui {
 
-    private DepositGui depositGui = new DepositGui(this);
+    private final DepositGui depositGui = new DepositGui(this);
+    private final PayOutGui payOutGui = new PayOutGui(this);
 
     public BankMainGui() {
         super(Component.text("Bank"), 3);
@@ -41,13 +41,10 @@ public class BankMainGui extends Gui {
 
         setItem(15, new GuiIcon(new ItemBuilder(Material.ORANGE_WOOL)
                 .setName(Lang.parse("<gold>Auszahlen"))
-        ));
+        ).onClick(e -> {
+            payOutGui.open(player);
+        }));
 
         update();
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent event) {
-
     }
 }
