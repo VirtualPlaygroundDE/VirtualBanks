@@ -1,0 +1,14 @@
+name: VirtualBanks
+version: '1.0.0'
+main: de.virtualplayground.bank.VirtualBanks
+api-version: '1.21'
+authors: [ MrMending ]
+dependencies:
+  server:
+    VirtualAPI:
+      load: BEFORE
+      required: true
+    CommandAPI:
+      load: BEFORE
+      required: true
+      join-classpath: true
