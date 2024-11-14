@@ -11,5 +11,5 @@
 > :warning: Dependencies: [VirtualAPI](https://github.com/VirtualPlaygroundDE/VirtualAPI), [FancyNpcs](https://modrinth.com/plugin/fancynpcs)
 
 ## Features
-- Bank Gui
-- Adds Physical Currency 
+- Bank GUI (+ NPC Support)
+- Physical Currency 
