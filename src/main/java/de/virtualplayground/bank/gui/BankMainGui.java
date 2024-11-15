@@ -24,9 +24,7 @@ public class BankMainGui extends Gui {
 
         Player player = (Player) event.getPlayer();
 
-        for (int slot = 0; slot < getInventory().getSize(); slot++) {
-            setItem(slot, new GuiIcon(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(Component.text(""))));
-        }
+        fill(new GuiIcon(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(Component.text(""))));
 
         setItem(11, new GuiIcon(new ItemBuilder(Material.YELLOW_WOOL)
                 .setName(Lang.parse("<gold>Einzahlen"))

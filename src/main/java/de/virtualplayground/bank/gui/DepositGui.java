@@ -3,22 +3,27 @@ package de.virtualplayground.bank.gui;
 import de.virtualplayground.api.VirtualAPI;
 import de.virtualplayground.api.item.CustomItemManager;
 import de.virtualplayground.api.player.VirtualPlayer;
+import de.virtualplayground.bank.currency.Currency;
 import de.virtualplayground.lib.gui.Gui;
 import de.virtualplayground.lib.gui.GuiIcon;
+import de.virtualplayground.lib.item.CustomItem;
 import de.virtualplayground.lib.item.ItemBuilder;
 import de.virtualplayground.lib.lang.Lang;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
 
 public class DepositGui extends Gui {
 
     private final BankMainGui bankMainGui;
 
     public DepositGui(@Nonnull BankMainGui bankMainGui) {
+
         super(Component.text("Bank > Einzahlen"), 5);
         this.bankMainGui = bankMainGui;
     }
@@ -41,45 +46,23 @@ public class DepositGui extends Gui {
             bankMainGui.open(player);
         }));
 
-        setItem(19, new GuiIcon(new ItemBuilder(Material.IRON_BLOCK)
-                .setName(Lang.parse("<yellow>1"))
-        ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_1").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_1").build());
-                virtualPlayer.addCoins(1);
-                updateBalance(virtualPlayer);
-            }
-        }));
+        int slot = 20;
+        for (Currency.Item item : Currency.Item.values()) {
 
-        setItem(21, new GuiIcon(new ItemBuilder(Material.GOLD_BLOCK)
-                .setName(Lang.parse("<yellow>10"))
-        ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_10").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_10").build());
-                virtualPlayer.addCoins(10);
-                updateBalance(virtualPlayer);
-            }
-        }));
+            ItemStack itemStack = itemManager.getItem("coins_" + item.getValue()).build();
 
-        setItem(23, new GuiIcon(new ItemBuilder(Material.EMERALD_BLOCK)
-                .setName(Lang.parse("<yellow>50"))
-        ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_50").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_50").build());
-                virtualPlayer.addCoins(50);
-                updateBalance(virtualPlayer);
-            }
-        }));
+            setItem(slot, new GuiIcon(new ItemBuilder(item.getType())
+                    .setName(Lang.parse("<yellow>" + item.getValue()))
+            ).onClick(e -> {
+                if (player.getInventory().containsAtLeast(itemStack, 1)) {
+                    player.getInventory().removeItem(itemStack);
+                    virtualPlayer.addCoins(item.getValue());
+                    updateBalance(virtualPlayer);
+                }
+            }));
 
-        setItem(25, new GuiIcon(new ItemBuilder(Material.DIAMOND_BLOCK)
-                .setName(Lang.parse("<yellow>100"))
-        ).onClick(e -> {
-            if (player.getInventory().containsAtLeast(itemManager.getItem("coins_100").build(), 1)) {
-                player.getInventory().removeItem(itemManager.getItem("coins_100").build());
-                virtualPlayer.addCoins(100);
-                updateBalance(virtualPlayer);
-            }
-        }));
+            slot++;
+        }
 
         updateBalance(virtualPlayer);
     }
